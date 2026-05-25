@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>纪念一只土狗</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Noto Sans SC", "PingFang SC", sans-serif;
+  background: linear-gradient(180deg, #fdf6ee 0%, #f5e6d3 100%);
+  min-height: 100vh;
+  color: #5a4a3a;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+  text-align: center;
+}
+.photo-frame {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #e8d5c0;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  background: #d4c5b2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  color: #b8a48c;
+}
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #5a4a3a;
+  margin-bottom: 4px;
+}
+.subtitle {
+  font-size: 15px;
+  color: #a08e7a;
+  margin-bottom: 6px;
+}
+.dates {
+  font-size: 13px;
+  color: #b8a48c;
+  margin-bottom: 30px;
+}
+.story {
+  background: rgba(255,255,255,0.6);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+  line-height: 1.8;
+  font-size: 14px;
+  color: #6b5a4a;
+  text-align: left;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(232,213,192,0.4);
+}
+.story p { margin-bottom: 12px; }
+.story p:last-child { margin-bottom: 0; }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #e8d5c0;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 12px;
+  color: #8a7a6a;
+  gap: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.btn:active { transform: scale(0.95); }
+.btn .icon { font-size: 28px; }
+.btn.flower:hover { border-color: #f0a8a8; background: #fdf0f0; }
+.btn.burn:hover { border-color: #d4a574; background: #faf0e6; }
+.btn.incense:hover { border-color: #b8c8a8; background: #f0f5ea; }
+.btn.pray:hover { border-color: #a8b8d0; background: #eef0f8; }
+
+.counters {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  font-size: 13px;
+  color: #a08e7a;
+}
+.counter-item { text-align: center; }
+.counter-num {
+  font-size: 24px;
+  font-weight: 600;
+  color: #6b5a4a;
+}
+
+.log {
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+  font-size: 13px;
+  color: #8a7a6a;
+  border: 1px solid rgba(232,213,192,0.3);
+}
+.log::-webkit-scrollbar { width: 4px; }
+.log::-webkit-scrollbar-thumb { background: #d4c5b2; border-radius: 2px; }
+.log-title { font-size: 13px; color: #b8a48c; margin-bottom: 8px; text-align: center; }
+.log-item { padding: 4px 0; border-bottom: 1px solid rgba(232,213,192,0.2); }
+.log-item:last-child { border-bottom: none; }
+.log-time { color: #c8b8a8; font-size: 11px; margin-left: 6px; }
+
+.footer {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #c8b8a8;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(90,74,58,0.9);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.toast.show { opacity: 1; }
+
+/* 烧纸动画 */
+.burn-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+.ash {
+  position: absolute;
+  font-size: 14px;
+  animation: floatUp 4s ease-out forwards;
+  opacity: 0;
+}
+@keyframes floatUp {
+  0% { opacity: 0.8; transform: translateY(0) scale(1); }
+  50% { opacity: 0.6; transform: translateY(-200px) scale(0.8); }
+  100% { opacity: 0; transform: translateY(-400px) scale(0.3); }
+}
+
+/* 花瓣动画 */
+.petal {
+  position: fixed;
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 50;
+  animation: fall 3s ease-in forwards;
+}
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(300px) rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+  <div class="photo-frame">🐕</div>
+  <h1>小黄</h1>
+  <div class="subtitle">一只普通的中华田园犬</div>
+  <div class="dates">🐾 来过 · 被爱过 · 从未被忘记</div>
+
+  <div class="story">
+    <p>小黄是一只土狗，黄色的毛，耳朵总是耷拉着一边。</p>
+    <p>它不名贵，不是什么品种狗，但它是这世上独一无二的小黄。它会摇着尾巴迎接每一个回家的人，会在你难过的时候把头搁在你腿上，会对着每一个路过的摩托车汪汪叫——就像那天一样。</p>
+    <p>周天骑摩托车的朋友不小心压到了它。它走得太突然了，还没来得及好好告别。</p>
+    <p>小黄，在汪星要好好的。那里有吃不完的肉骨头，有跑不完的田野。</p>
+    <p style="text-align:center;margin-top:16px;">🙏 一路走好</p>
+  </div>
+
+  <div class="actions">
+    <div class="btn flower" onclick="offerFlower()">
+      <span class="icon">🌷</span>
+      <span>献花</span>
+    </div>
+    <div class="btn burn" onclick="burnPaper()">
+      <span class="icon">🕯️</span>
+      <span>烧纸</span>
+    </div>
+    <div class="btn incense" onclick="lightIncense()">
+      <span class="icon">🙏</span>
+      <span>上香</span>
+    </div>
+    <div class="btn pray" onclick="pray()">
+      <span class="icon">🕊️</span>
+      <span>祈福</span>
+    </div>
+  </div>
+
+  <div class="counters">
+    <div class="counter-item">
+      <div class="counter-num" id="flowerCount">0</div>
+      <div>🌷 献花</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter-num" id="burnCount">0</div>
+      <div>🕯️ 烧纸</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter-num" id="incenseCount">0</div>
+      <div>🙏 上香</div>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="log-title">📜 纪念记录</div>
+    <div id="logList"></div>
+  </div>
+
+  <div class="footer">永远怀念 · 小黄 🐾</div>
+</div>
+
+<script>
+const toast = document.getElementById('toast');
+let counts = { flower: 0, burn: 0, incense: 0 };
+let logs = [];
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function addLog(action) {
+  const now = new Date();
+  const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+  logs.unshift({ action, time });
+  renderLog();
+}
+
+function renderLog() {
+  const list = document.getElementById('logList');
+  list.innerHTML = logs.map(l =>
+    `<div class="log-item">${l.action}<span class="log-time">${l.time}</span></div>`
+  ).join('');
+}
+
+function animateFlowers() {
+  const emojis = ['🌸','🌷','🌺','🌻','🌼','💐'];
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      petal.style.left = Math.random() * 80 + 10 + '%';
+      petal.style.top = '-30px';
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 3000);
+    }, i * 100);
+  }
+}
+
+function animateAshes() {
+  const ashChars = ['🔥','✨','💫','🕯️'];
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const ash = document.createElement('div');
+      ash.className = 'ash';
+      ash.textContent = ashChars[Math.floor(Math.random() * ashChars.length)];
+      ash.style.left = (30 + Math.random() * 40) + '%';
+      ash.style.bottom = '30%';
+      document.body.appendChild(ash);
+      setTimeout(() => ash.remove(), 4000);
+    }, i * 200);
+  }
+}
+
+function offerFlower() {
+  counts.flower++;
+  document.getElementById('flowerCount').textContent = counts.flower;
+  animateFlowers();
+  addLog('🌷 献上了一束花');
+  showToast('🌷 已献花，愿天堂开满鲜花');
+  saveState();
+}
+
+function burnPaper() {
+  counts.burn++;
+  document.getElementById('burnCount').textContent = counts.burn;
+  animateAshes();
+  addLog('🕯️ 烧纸祭奠');
+  showToast('🕯️ 纸钱已送达，愿在那边衣食无忧');
+  saveState();
+}
+
+function lightIncense() {
+  counts.incense++;
+  document.getElementById('incenseCount').textContent = counts.incense;
+  addLog('🙏 上香祈福');
+  showToast('🙏 一炷清香，愿离苦得乐');
+  saveState();
+}
+
+function pray() {
+  const prayers = [
+    '🕊️ 愿你在汪星自由奔跑',
+    '🌟 小黄，一路走好',
+    '🌈 彩虹桥上有最好的草地',
+    '💛 谢谢你带来的快乐时光',
+    '🐾 永远活在我们心里',
+  ];
+  const msg = prayers[Math.floor(Math.random() * prayers.length)];
+  addLog(msg);
+  showToast(msg);
+}
+
+// 状态持久化
+function saveState() {
+  localStorage.setItem('dogMemorial', JSON.stringify({ counts, logs }));
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('dogMemorial'));
+    if (saved) {
+      counts = saved.counts || counts;
+      logs = saved.logs || [];
+      document.getElementById('flowerCount').textContent = counts.flower;
+      document.getElementById('burnCount').textContent = counts.burn;
+      document.getElementById('incenseCount').textContent = counts.incense;
+      renderLog();
+    }
+  } catch(e) {}
+}
+
+loadState();
+
+// 自动加一条初始记录
+if (logs.length === 0) {
+  addLog('🐾 纪念页面创建，小黄安息');
+}
+</script>
+</body>
+</html>
