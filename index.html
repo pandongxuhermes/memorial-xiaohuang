@@ -213,7 +213,33 @@ h1 {
 .person-detail, .dog-detail { font-size:12px; color:#8a7a6a; margin-top:2px; }
 .dog-icon { font-size:40px; }
 .dog-name { font-size:15px; font-weight:600; color:#5a4a3a; }
-</style>
+.guestbook { margin-top:32px; text-align:left; }
+.gb-title { font-size:15px; font-weight:600; color:#5a4a3a; margin-bottom:14px; text-align:center; }
+.gb-form { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.gb-input, .gb-textarea {
+  font-family:inherit; font-size:13px; padding:10px 14px;
+  border:1px solid #e0d0c0; border-radius:10px;
+  background:rgba(255,255,255,0.7); color:#5a4a3a;
+  outline:none; transition:border-color 0.2s;
+}
+.gb-input:focus, .gb-textarea:focus { border-color:#c8b0a0; }
+.gb-textarea { resize:vertical; min-height:60px; }
+.gb-btn {
+  align-self:flex-end; padding:8px 24px;
+  background:#8a7a6a; color:#fff; border:none;
+  border-radius:8px; font-size:13px; cursor:pointer;
+  transition:background 0.2s;
+}
+.gb-btn:hover { background:#6b5a4a; }
+.gb-item {
+  padding:12px; border-bottom:1px solid rgba(232,213,192,0.3);
+}
+.gb-item:last-child { border-bottom:none; }
+.gb-head { display:flex; justify-content:space-between; margin-bottom:4px; }
+.gb-name { font-weight:600; color:#5a4a3a; font-size:13px; }
+.gb-time { color:#b8a48c; font-size:11px; }
+.gb-text { color:#6b5a4a; font-size:13px; line-height:1.6; }
+.gb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:20px; }</style>
 </head>
 <body>
 
@@ -289,6 +315,16 @@ h1 {
   <div class="log">
     <div class="log-title">📜 纪念记录</div>
     <div id="logList"></div>
+  </div>
+
+  <div class="guestbook">
+    <div class="gb-title">📝 留言板</div>
+    <div class="gb-form">
+      <input type="text" id="gbName" class="gb-input" placeholder="你的昵称（必填）" maxlength="20" required>
+      <textarea id="gbMsg" class="gb-textarea" placeholder="说点什么吧……" maxlength="500" rows="3"></textarea>
+      <button class="gb-btn" onclick="submitMsg()">发表留言</button>
+    </div>
+    <div id="gbList"></div>
   </div>
 
   <div class="footer">
@@ -411,10 +447,48 @@ function loadState() {
   } catch(e) {}
 }
 
-loadState();
-if (logs.length === 0) {
-  addLog('🙏 邓文卓为小黄建立了纪念页面');
+let guestbook = [];
+
+function saveGuestbook() {
+  localStorage.setItem('dogGuestbook', JSON.stringify(guestbook));
 }
+
+function loadGuestbook() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('dogGuestbook'));
+    if (saved) guestbook = saved;
+  } catch(e) {}
+  renderGuestbook();
+}
+
+function renderGuestbook() {
+  const list = document.getElementById('gbList');
+  if (!list) return;
+  if (guestbook.length === 0) {
+    list.innerHTML = '<div class="gb-empty">还没有留言，来说点什么吧 🕊️</div>';
+    return;
+  }
+  list.innerHTML = guestbook.map(m =>
+    '<div class="gb-item"><div class="gb-head"><span class="gb-name">' + m.name + '</span><span class="gb-time">' + m.time + '</span></div><div class="gb-text">' + m.msg + '</div></div>'
+  ).join('');
+}
+
+function submitMsg() {
+  const name = document.getElementById('gbName').value.trim();
+  const msg = document.getElementById('gbMsg').value.trim();
+  if (!name) { showToast('⚠️ 请留下昵称'); return; }
+  if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
+  const now = new Date();
+  const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+  guestbook.unshift({ name, msg, time });
+  saveGuestbook();
+  renderGuestbook();
+  document.getElementById('gbName').value = '';
+  document.getElementById('gbMsg').value = '';
+  showToast('✅ 留言已发布');
+}
+
+loadGuestbook();
 </script>
 </body>
 </html>
