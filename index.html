@@ -400,6 +400,9 @@ function offerFlower() {
   counts.flower++;
   document.getElementById('flowerCount').textContent = counts.flower;
   animateFlowers();
+  if (myName && !userStats[myName]) userStats[myName] = {flower:0,burn:0,pray:0,total:0};
+  if (myName) { userStats[myName].flower++; userStats[myName].total++; }
+  renderLeaderboard();
   addLog('🌷 献上了一束花');
   showToast('🌷 愿天堂开满鲜花');
   recordAction('flower');
@@ -437,8 +440,23 @@ function pray() {
   showToast(msg);
 }
 
+
+function renderLeaderboard() {
+  const el = document.getElementById('leaderboard');
+  if (!el) return;
+  const sorted = Object.entries(userStats || {}).sort((a, b) => b[1].total - a[1].total);
+  if (sorted.length === 0) {
+    el.innerHTML = '<div class="lb-empty">还没有人互动，快来献花吧 🌷</div>';
+    return;
+  }
+  el.innerHTML = '<div class="lb-title">🏆 互动榜单</div>' +
+    sorted.map(([name, s], i) => {
+      const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1) + '.';
+      return '<div class="lb-item"><span class="lb-rank">' + medal + '</span><span class="lb-name">' + name + '</span><span class="lb-stats">🌷' + (s.flower||0) + ' 🕯️' + (s.burn||0) + ' 🕊️' + (s.pray||0) + ' · 共' + s.total + '次</span></div>';
+    }).join('');
+}
 function saveState() {
-  localStorage.setItem('dogMemorial', JSON.stringify({ counts, logs }));
+  localStorage.setItem('dogMemorial', JSON.stringify({ counts, logs, userStats: userStats || {} }));
 }
 
 function loadState() {
@@ -447,10 +465,12 @@ function loadState() {
     if (saved) {
       counts = saved.counts || counts;
       logs = saved.logs || [];
+      userStats = saved.userStats || {};
       document.getElementById('flowerCount').textContent = counts.flower;
       document.getElementById('burnCount').textContent = counts.burn;
       document.getElementById('incenseCount').textContent = counts.incense;
       renderLog();
+      renderLeaderboard();
     }
   } catch(e) {}
 }
