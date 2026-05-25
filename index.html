@@ -38,40 +38,24 @@ body {
   overflow: hidden;
   border: 4px solid #e8d5c0;
   box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-  background: #d4c5b2;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 80px;
-  color: #b8a48c;
 }
-h1 {
-  font-size: 26px;
-  font-weight: 600;
-  color: #5a4a3a;
-  margin-bottom: 4px;
+.people-section { display:flex; gap:14px; margin-bottom:24px; }
+.person-card, .dog-card {
+  flex:1; background:rgba(255,255,255,0.55); border-radius:14px;
+  padding:14px; border:1px solid rgba(232,213,192,0.35);
+  display:flex; align-items:center; gap:10px;
+  backdrop-filter:blur(8px);
 }
-.subtitle {
-  font-size: 15px;
-  color: #a08e7a;
-  margin-bottom: 6px;
-}
-.dates {
-  font-size: 13px;
-  color: #b8a48c;
-  margin-bottom: 30px;
-}
-.info {
-  background: rgba(255,255,255,0.5);
-  border-radius: 12px;
-  padding: 14px 20px;
-  margin-bottom: 24px;
-  font-size: 13px;
-  color: #8a7a6a;
-  line-height: 1.8;
-  border: 1px solid rgba(232,213,192,0.3);
-}
-.info span { color: #6b5a4a; font-weight: 500; }
+.person-photo { width:56px; height:56px; border-radius:50%; object-fit:cover; border:3px solid #e8d5c0; }
+.person-name { font-size:14px; font-weight:600; color:#5a4a3a; }
+.person-detail { font-size:11px; color:#8a7a6a; margin-top:2px; }
+.dog-icon { font-size:36px; }
+.dog-name { font-size:14px; font-weight:600; color:#5a4a3a; }
+.dog-detail { font-size:11px; color:#8a7a6a; }
 .story {
   background: rgba(255,255,255,0.6);
   border-radius: 16px;
@@ -86,7 +70,6 @@ h1 {
 }
 .story p { margin-bottom: 12px; }
 .story p:last-child { margin-bottom: 0; }
-
 .actions {
   display: flex;
   justify-content: center;
@@ -110,6 +93,7 @@ h1 {
   color: #8a7a6a;
   gap: 4px;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 .btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 .btn:active { transform: scale(0.95); }
@@ -118,7 +102,6 @@ h1 {
 .btn.burn:hover { border-color: #d4a574; background: #faf0e6; }
 .btn.incense:hover { border-color: #b8c8a8; background: #f0f5ea; }
 .btn.pray:hover { border-color: #a8b8d0; background: #eef0f8; }
-
 .counters {
   display: flex;
   justify-content: center;
@@ -128,12 +111,7 @@ h1 {
   color: #a08e7a;
 }
 .counter-item { text-align: center; }
-.counter-num {
-  font-size: 24px;
-  font-weight: 600;
-  color: #6b5a4a;
-}
-
+.counter-num { font-size: 24px; font-weight: 600; color: #6b5a4a; }
 .log {
   background: rgba(255,255,255,0.5);
   border-radius: 12px;
@@ -151,14 +129,50 @@ h1 {
 .log-item { padding: 4px 0; border-bottom: 1px solid rgba(232,213,192,0.2); }
 .log-item:last-child { border-bottom: none; }
 .log-time { color: #c8b8a8; font-size: 11px; margin-left: 6px; }
-
+.leaderboard {
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(232,213,192,0.3);
+}
+.lb-title { font-size: 14px; font-weight: 600; color:#5a4a3a; margin-bottom: 10px; text-align:center; }
+.lb-item { display:flex; align-items:center; gap:8px; padding:5px 8px; border-bottom:1px solid rgba(232,213,192,0.15); font-size:13px; }
+.lb-item:last-child { border-bottom:none; }
+.lb-rank { width:26px; text-align:center; }
+.lb-name { font-weight:600; color:#5a4a3a; flex:1; }
+.lb-stats { color:#8a7a6a; font-size:12px; }
+.lb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:14px; }
+.guestbook { text-align:left; }
+.gb-title { font-size:14px; font-weight:600; color:#5a4a3a; margin-bottom:12px; text-align:center; }
+.gb-hint { font-size:13px; color:#8a7a6a; margin-bottom:8px; }
+.gb-textarea {
+  font-family:inherit; font-size:13px; padding:10px 14px;
+  border:1px solid #e0d0c0; border-radius:10px; width:100%;
+  background:rgba(255,255,255,0.7); color:#5a4a3a;
+  outline:none; resize:vertical; min-height:60px;
+}
+.gb-textarea:focus { border-color:#c8b0a0; }
+.gb-btn {
+  float:right; margin-top:8px; padding:8px 24px;
+  background:#8a7a6a; color:#fff; border:none;
+  border-radius:8px; font-size:13px; cursor:pointer;
+}
+.gb-btn:hover { background:#6b5a4a; }
+.gb-item { padding:10px 0; border-bottom:1px solid rgba(232,213,192,0.25); }
+.gb-item:last-child { border-bottom:none; }
+.gb-head { display:flex; justify-content:space-between; margin-bottom:3px; }
+.gb-name { font-weight:600; color:#5a4a3a; font-size:13px; }
+.gb-time { color:#b8a48c; font-size:11px; }
+.gb-text { color:#6b5a4a; font-size:13px; line-height:1.6; }
+.gb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:20px; }
 .footer {
   margin-top: 40px;
   font-size: 12px;
   color: #c8b8a8;
   line-height: 2;
+  clear:both;
 }
-
 .toast {
   position: fixed;
   top: 20px;
@@ -173,17 +187,11 @@ h1 {
   transition: opacity 0.3s;
   pointer-events: none;
   z-index: 100;
-  backdrop-filter: blur(10px);
 }
 .toast.show { opacity: 1; }
-
 .ash {
-  position: fixed;
-  z-index: 50;
-  pointer-events: none;
-  font-size: 14px;
-  animation: floatUp 4s ease-out forwards;
-  opacity: 0;
+  position: fixed; z-index: 50; pointer-events: none;
+  font-size: 14px; animation: floatUp 4s ease-out forwards; opacity: 0;
 }
 @keyframes floatUp {
   0% { opacity: 0.8; transform: translateY(0) scale(1); }
@@ -191,77 +199,26 @@ h1 {
   100% { opacity: 0; transform: translateY(-400px) scale(0.3); }
 }
 .petal {
-  position: fixed;
-  z-index: 50;
-  pointer-events: none;
-  font-size: 18px;
-  animation: fall 3s ease-in forwards;
+  position: fixed; z-index: 50; pointer-events: none;
+  font-size: 18px; animation: fall 3s ease-in forwards;
 }
 @keyframes fall {
   0% { opacity: 1; transform: translateY(0) rotate(0deg); }
   100% { opacity: 0; transform: translateY(300px) rotate(360deg); }
 }
-.people-section { display:flex; gap:14px; margin-bottom:24px; }
-.person-card, .dog-card {
-  flex:1; background:rgba(255,255,255,0.55); border-radius:14px;
-  padding:16px; border:1px solid rgba(232,213,192,0.35);
-  display:flex; align-items:center; gap:12px;
-  backdrop-filter:blur(8px);
-}
-.person-photo { width:64px; height:64px; border-radius:50%; object-fit:cover; border:3px solid #e8d5c0; }
-.person-name { font-size:15px; font-weight:600; color:#5a4a3a; }
-.person-detail, .dog-detail { font-size:12px; color:#8a7a6a; margin-top:2px; }
-.dog-icon { font-size:40px; }
-.dog-name { font-size:15px; font-weight:600; color:#5a4a3a; }
-.guestbook { margin-top:32px; text-align:left; }
-.gb-title { font-size:15px; font-weight:600; color:#5a4a3a; margin-bottom:14px; text-align:center; }
-.gb-form { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
-.gb-input, .gb-textarea {
-  font-family:inherit; font-size:13px; padding:10px 14px;
-  border:1px solid #e0d0c0; border-radius:10px;
-  background:rgba(255,255,255,0.7); color:#5a4a3a;
-  outline:none; transition:border-color 0.2s;
-}
-.gb-input:focus, .gb-textarea:focus { border-color:#c8b0a0; }
-.gb-textarea { resize:vertical; min-height:60px; }
-.gb-btn {
-  align-self:flex-end; padding:8px 24px;
-  background:#8a7a6a; color:#fff; border:none;
-  border-radius:8px; font-size:13px; cursor:pointer;
-  transition:background 0.2s;
-}
-.gb-btn:hover { background:#6b5a4a; }
-.gb-item {
-  padding:12px; border-bottom:1px solid rgba(232,213,192,0.3);
-}
-.gb-item:last-child { border-bottom:none; }
-.gb-head { display:flex; justify-content:space-between; margin-bottom:4px; }
-.gb-name { font-weight:600; color:#5a4a3a; font-size:13px; }
-.gb-time { color:#b8a48c; font-size:11px; }
-.gb-text { color:#6b5a4a; font-size:13px; line-height:1.6; }
-.gb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:20px; }
-.leaderboard { margin-bottom:20px; text-align:left; }
-.lb-title { font-size:15px; font-weight:600; color:#5a4a3a; margin-bottom:12px; text-align:center; }
-.lb-item { display:flex; align-items:center; gap:8px; padding:6px 10px; border-bottom:1px solid rgba(232,213,192,0.2); font-size:13px; }
-.lb-rank { width:28px; text-align:center; font-size:14px; }
-.lb-name { font-weight:600; color:#5a4a3a; flex:1; }
-.lb-stats { color:#8a7a6a; font-size:12px; }
-.lb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:14px; }</style>
+</style>
 </head>
 <body>
-
 <div class="toast" id="toast"></div>
-
 <div class="container">
   <div class="main-title">邓文卓 沉痛缅怀</div>
   <div class="sub-title">一只中华田园犬 · 小黄</div>
-
   <div class="photo-frame">🐕</div>
 
   <div class="people-section">
     <div class="person-card">
-      <img src="dengwenzhuo.jpg" class="person-photo">
-      <div class="person-info">
+      <img src="dengwenzhuo.jpg" class="person-photo" onerror="this.style.display='none'">
+      <div>
         <div class="person-name">🧑 邓文卓</div>
         <div class="person-detail">🏍️ 川崎 ZX-10R · 成都太平山</div>
         <div class="person-detail">🎮 网易游戏 · 游戏策划</div>
@@ -269,7 +226,7 @@ h1 {
     </div>
     <div class="dog-card">
       <div class="dog-icon">🐕</div>
-      <div class="dog-info">
+      <div>
         <div class="dog-name">🐾 小黄</div>
         <div class="dog-detail">一只普通的中华田园犬</div>
       </div>
@@ -286,37 +243,16 @@ h1 {
   </div>
 
   <div class="actions">
-    <div class="btn flower" onclick="checkName(offerFlower)">
-      <span class="icon">🌷</span>
-      <span>献花</span>
-    </div>
-    <div class="btn burn" onclick="checkName(burnPaper)">
-      <span class="icon">🕯️</span>
-      <span>烧纸</span>
-    </div>
-    <div class="btn incense" onclick="checkName(lightIncense)">
-      <span class="icon">🙏</span>
-      <span>上香</span>
-    </div>
-    <div class="btn pray" onclick="checkName(pray)">
-      <span class="icon">🕊️</span>
-      <span>祈福</span>
-    </div>
+    <div class="btn flower" id="btnFlower"><span class="icon">🌷</span><span>献花</span></div>
+    <div class="btn burn" id="btnBurn"><span class="icon">🕯️</span><span>烧纸</span></div>
+    <div class="btn incense" id="btnIncense"><span class="icon">🙏</span><span>上香</span></div>
+    <div class="btn pray" id="btnPray"><span class="icon">🕊️</span><span>祈福</span></div>
   </div>
 
   <div class="counters">
-    <div class="counter-item">
-      <div class="counter-num" id="flowerCount">0</div>
-      <div>🌷 献花</div>
-    </div>
-    <div class="counter-item">
-      <div class="counter-num" id="burnCount">0</div>
-      <div>🕯️ 烧纸</div>
-    </div>
-    <div class="counter-item">
-      <div class="counter-num" id="incenseCount">0</div>
-      <div>🙏 上香</div>
-    </div>
+    <div class="counter-item"><div class="counter-num" id="flowerCount">0</div><div>🌷 献花</div></div>
+    <div class="counter-item"><div class="counter-num" id="burnCount">0</div><div>🕯️ 烧纸</div></div>
+    <div class="counter-item"><div class="counter-num" id="incenseCount">0</div><div>🙏 上香</div></div>
   </div>
 
   <div class="log">
@@ -325,25 +261,67 @@ h1 {
   </div>
 
   <div id="leaderboard" class="leaderboard"></div>
+
   <div class="guestbook">
     <div class="gb-title">📝 留言板</div>
-    <div class="gb-form">
-      <div class="gb-hint">💬 当前昵称：<span id="gbCurrentName" style="font-weight:600;color:#5a4a3a;">未设置</span> <span style="color:#64b5f6;cursor:pointer;font-size:12px;" onclick="changeName()">[更换]</span></div>
-      <textarea id="gbMsg" class="gb-textarea" placeholder="说点什么吧……" maxlength="500" rows="3"></textarea>
-      <button class="gb-btn" onclick="submitMsg()">发表留言</button>
-    </div>
+    <div class="gb-hint">当前昵称：<span id="gbCurrentName">未设置</span> <span style="color:#64b5f6;cursor:pointer;" onclick="changeName()">[更换]</span></div>
+    <textarea id="gbMsg" class="gb-textarea" placeholder="说点什么吧……" maxlength="500" rows="3"></textarea>
+    <button class="gb-btn" onclick="submitMsg()">发表留言</button>
     <div id="gbList"></div>
   </div>
 
   <div class="footer">
-    邓文卓 · 网易游戏 | 川崎 ZX-10R · 太平山<br>
-    🐾 永远怀念小黄 🐾
+    邓文卓 · 网易游戏 | 🐾 永远怀念小黄 🐾<br>网站建设者：潘东旭
   </div>
 </div>
 
 <script>
+// ====== Data ======
 const toast = document.getElementById('toast');
-function recordAction(type) {
+let myName = localStorage.getItem('dogVisitorName') || '';
+let counts = { flower: 0, burn: 0, incense: 0 };
+let logs = [];
+let userStats = {};
+let guestbook = [];
+
+// ====== Helpers ======
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function fmtTime() {
+  return new Date().toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
+}
+
+// ====== Nickname ======
+function ensureName(callback) {
+  if (myName) { callback(); return; }
+  const name = prompt('请先输入你的昵称（献花、烧纸、留言都需要）：');
+  if (name && name.trim()) {
+    myName = name.trim();
+    localStorage.setItem('dogVisitorName', myName);
+    document.getElementById('gbCurrentName').textContent = myName;
+    showToast('✅ 昵称已设置：' + myName);
+    callback();
+  } else {
+    showToast('⚠️ 请填写昵称');
+  }
+}
+
+function changeName() {
+  const n = prompt('输入新昵称：');
+  if (n && n.trim()) {
+    myName = n.trim();
+    localStorage.setItem('dogVisitorName', myName);
+    document.getElementById('gbCurrentName').textContent = myName;
+    showToast('✅ 昵称已更新');
+  }
+}
+
+// ====== Interactions ======
+function recordInteraction(type) {
   if (!myName) return;
   if (!userStats[myName]) userStats[myName] = {flower:0,burn:0,pray:0,total:0};
   userStats[myName][type]++;
@@ -352,159 +330,139 @@ function recordAction(type) {
   renderLeaderboard();
 }
 
-let counts = { flower: 0, burn: 0, incense: 0 };
-let userStats = {};
-let logs = [];
-
-
-
-function checkName(action) {
-  if (myName) { action(); return; }
-  const name = prompt('请先输入你的昵称（献花、烧纸、留言都需要）：');
-  if (name && name.trim()) {
-    myName = name.trim();
-    localStorage.setItem('dogVisitorName', myName);
-    if (document.getElementById('gbCurrentName')) document.getElementById('gbCurrentName').textContent = myName;
-    showToast('✅ 昵称已设置：' + myName);
-    action();
-  } else {
-    showToast('⚠️ 请填写昵称');
-  }
-}
-
-function showToast(msg) {
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2000);
-}
-
-function addLog(action) {
-  const now = new Date();
-  const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  logs.unshift({ action, time });
-  renderLog();
-}
-
-function renderLog() {
-  const list = document.getElementById('logList');
-  list.innerHTML = logs.map(l =>
-    `<div class="log-item">${l.action}<span class="log-time">${l.time}</span></div>`
-  ).join('');
-}
-
-function animateFlowers() {
-  const emojis = ['🌸','🌷','🌺','🌻','🌼','💐'];
-  for (let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      petal.style.left = Math.random() * 80 + 10 + '%';
-      petal.style.top = '-30px';
-      document.body.appendChild(petal);
-      setTimeout(() => petal.remove(), 3000);
-    }, i * 100);
-  }
-}
-
-function animateAshes() {
-  const chars = ['🔥','✨','💫','🕯️'];
-  for (let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const ash = document.createElement('div');
-      ash.className = 'ash';
-      ash.textContent = chars[Math.floor(Math.random() * chars.length)];
-      ash.style.left = (30 + Math.random() * 40) + '%';
-      ash.style.bottom = '30%';
-      document.body.appendChild(ash);
-      setTimeout(() => ash.remove(), 4000);
-    }, i * 200);
-  }
-}
-
-function offerFlower() {
+function doFlower() {
   counts.flower++;
   document.getElementById('flowerCount').textContent = counts.flower;
-  animateFlowers();
-  if (myName && !userStats[myName]) userStats[myName] = {flower:0,burn:0,pray:0,total:0};
-  if (myName) { userStats[myName].flower++; userStats[myName].total++; }
-  renderLeaderboard();
-  addLog('🌷 献上了一束花');
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.textContent = ['🌸','🌷','🌺','🌻','🌼','💐'][Math.floor(Math.random()*6)];
+      el.style.left = Math.random() * 80 + 10 + '%';
+      el.style.top = '-30px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }, i * 100);
+  }
+  recordInteraction('flower');
+  logs.unshift({ action: myName + ' 🌷 献上了一束花', time: fmtTime() });
+  renderLog();
+  saveState();
   showToast('🌷 愿天堂开满鲜花');
-  recordAction('flower');
 }
 
-function burnPaper() {
+function doBurn() {
   counts.burn++;
   document.getElementById('burnCount').textContent = counts.burn;
-  animateAshes();
-  addLog('🕯️ 烧纸祭奠');
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'ash';
+      el.textContent = ['🔥','✨','💫','🕯️'][Math.floor(Math.random()*4)];
+      el.style.left = (30 + Math.random() * 40) + '%';
+      el.style.bottom = '30%';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }, i * 200);
+  }
+  recordInteraction('burn');
+  logs.unshift({ action: myName + ' 🕯️ 烧纸祭奠', time: fmtTime() });
+  renderLog();
+  saveState();
   showToast('🕯️ 纸钱已送达');
-  recordAction('burn');
 }
 
-function lightIncense() {
+function doIncense() {
   counts.incense++;
   document.getElementById('incenseCount').textContent = counts.incense;
-  addLog('🙏 上香祈福');
+  recordInteraction('incense');
+  logs.unshift({ action: myName + ' 🙏 上香祈福', time: fmtTime() });
+  renderLog();
+  saveState();
   showToast('🙏 一炷清香，愿离苦得乐');
-  recordAction('incense');
 }
 
-function pray() {
-  const prayers = [
-    '🕊️ 愿你在汪星自由奔跑',
-    '🌟 小黄，一路走好',
-    '🌈 彩虹桥上有最好的草地',
-    '💛 谢谢你带来的快乐时光',
-    '🐾 永远活在我们心里',
-    '🏍️ 文卓会一直记得你',
-    '☀️ 太平山的阳光会替我爱你',
-  ];
-  const msg = prayers[Math.floor(Math.random() * prayers.length)];
-  addLog(msg);
+function doPray() {
+  const msgs = ['🕊️ 愿你在汪星自由奔跑','🌟 小黄，一路走好','🌈 彩虹桥上有最好的草地','💛 谢谢你带来的快乐时光','🐾 永远活在我们心里','🏍️ 文卓会一直记得你','☀️ 太平山的阳光会替我爱你'];
+  const msg = msgs[Math.floor(Math.random() * msgs.length)];
+  recordInteraction('pray');
+  logs.unshift({ action: myName + ' ' + msg, time: fmtTime() });
+  renderLog();
+  saveState();
   showToast(msg);
 }
 
+// ====== Bind Buttons ======
+document.getElementById('btnFlower').onclick = function() { ensureName(doFlower); };
+document.getElementById('btnBurn').onclick = function() { ensureName(doBurn); };
+document.getElementById('btnIncense').onclick = function() { ensureName(doIncense); };
+document.getElementById('btnPray').onclick = function() { ensureName(doPray); };
+
+// ====== Log & Leaderboard ======
+function renderLog() {
+  document.getElementById('logList').innerHTML = logs.map(l =>
+    '<div class="log-item">' + l.action + '<span class="log-time">' + l.time + '</span></div>'
+  ).join('');
+}
 
 function renderLeaderboard() {
   const el = document.getElementById('leaderboard');
-  if (!el) return;
-  const sorted = Object.entries(userStats || {}).sort((a, b) => b[1].total - a[1].total);
+  const sorted = Object.entries(userStats).sort(function(a,b){return b[1].total-a[1].total;});
   if (sorted.length === 0) {
     el.innerHTML = '<div class="lb-empty">还没有人互动，快来献花吧 🌷</div>';
     return;
   }
   el.innerHTML = '<div class="lb-title">🏆 互动榜单</div>' +
-    sorted.map(([name, s], i) => {
-      const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1) + '.';
-      return '<div class="lb-item"><span class="lb-rank">' + medal + '</span><span class="lb-name">' + name + '</span><span class="lb-stats">🌷' + (s.flower||0) + ' 🕯️' + (s.burn||0) + ' 🕊️' + (s.pray||0) + ' · 共' + s.total + '次</span></div>';
+    sorted.map(function(n,i){
+      var m = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+      return '<div class="lb-item"><span class="lb-rank">'+m+'</span><span class="lb-name">'+n[0]+'</span><span class="lb-stats">🌷'+(n[1].flower||0)+' 🕯️'+(n[1].burn||0)+' 🕊️'+(n[1].pray||0)+' · 共'+n[1].total+'次</span></div>';
     }).join('');
 }
-function renderLeaderboard() { var el = document.getElementById("leaderboard"); if (!el) return; var sorted = Object.entries(userStats||{}).sort(function(a,b){return b[1].total-a[1].total}); if (sorted.length===0) { el.innerHTML = '<div class="lb-empty">还没有人互动，快来献花吧 🌷</div>'; return; } el.innerHTML = '<div class="lb-title">🏆 互动榜单</div>' + sorted.map(function(n,i){var m=i===0?"🥇":i===1?"🥈":i===2?"🥉":(i+1)+"."; return '<div class="lb-item"><span class="lb-rank">'+m+'</span><span class="lb-name">'+n[0]+'</span><span class="lb-stats">🌷'+(n[1].flower||0)+' 🕯️'+(n[1].burn||0)+' 🕊️'+(n[1].pray||0)+' · 共'+n[1].total+'次</span></div>'; }).join(""); }
 
+// ====== Guestbook ======
+function submitMsg() {
+  if (!myName) {
+    const n = prompt('请先输入你的昵称：');
+    if (n && n.trim()) { myName = n.trim(); localStorage.setItem('dogVisitorName', myName); document.getElementById('gbCurrentName').textContent = myName; }
+    else { showToast('⚠️ 请填写昵称'); return; }
+  }
+  var msg = document.getElementById('gbMsg').value.trim();
+  if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
+  guestbook.unshift({ name: myName, msg: msg, time: fmtTime() });
+  document.getElementById('gbMsg').value = '';
+  saveGuestbook();
+  renderGuestbook();
+  showToast('✅ 留言已发布');
+}
+
+function renderGuestbook() {
+  var list = document.getElementById('gbList');
+  if (guestbook.length === 0) {
+    list.innerHTML = '<div class="gb-empty">还没有留言，来说点什么吧 🕊️</div>';
+    return;
+  }
+  list.innerHTML = guestbook.map(function(m){
+    return '<div class="gb-item"><div class="gb-head"><span class="gb-name">' + (m.name||'匿名') + '</span><span class="gb-time">' + m.time + '</span></div><div class="gb-text">' + m.msg + '</div></div>';
+  }).join('');
+}
+
+// ====== Persistence ======
 function saveState() {
-  localStorage.setItem('dogMemorial', JSON.stringify({ counts, logs, userStats: userStats || {} }));
+  localStorage.setItem('dogMemorial', JSON.stringify({ counts: counts, logs: logs, userStats: userStats }));
 }
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem('dogMemorial'));
+    var saved = JSON.parse(localStorage.getItem('dogMemorial'));
     if (saved) {
-      counts = saved.counts || counts;
-      logs = saved.logs || [];
-      userStats = saved.userStats || {};
-      userStats = saved.userStats || {};
-      document.getElementById('flowerCount').textContent = counts.flower;
-      document.getElementById('burnCount').textContent = counts.burn;
-      document.getElementById('incenseCount').textContent = counts.incense;
+      if (saved.counts) { counts = saved.counts; document.getElementById('flowerCount').textContent = counts.flower || 0; document.getElementById('burnCount').textContent = counts.burn || 0; document.getElementById('incenseCount').textContent = counts.incense || 0; }
+      if (saved.logs) logs = saved.logs;
+      if (saved.userStats) userStats = saved.userStats;
       renderLog();
       renderLeaderboard();
     }
   } catch(e) {}
 }
-
-let guestbook = [];
 
 function saveGuestbook() {
   localStorage.setItem('dogGuestbook', JSON.stringify(guestbook));
@@ -512,43 +470,16 @@ function saveGuestbook() {
 
 function loadGuestbook() {
   try {
-    const saved = JSON.parse(localStorage.getItem('dogGuestbook'));
+    var saved = JSON.parse(localStorage.getItem('dogGuestbook'));
     if (saved) guestbook = saved;
   } catch(e) {}
   renderGuestbook();
 }
 
-function renderGuestbook() {
-  const list = document.getElementById('gbList');
-  if (!list) return;
-  if (guestbook.length === 0) {
-    list.innerHTML = '<div class="gb-empty">还没有留言，来说点什么吧 🕊️</div>';
-    return;
-  }
-  list.innerHTML = guestbook.map(m =>
-    '<div class="gb-item"><div class="gb-head"><span class="gb-name">' + (m.name || '匿名') + '</span><span class="gb-time">' + m.time + '</span></div><div class="gb-text">' + m.msg + '</div></div>'
-  ).join('');
-}
-
-function submitMsg() {
-  if (!myName) {
-    const n = prompt('请先输入你的昵称：');
-    if (n && n.trim()) { myName = n.trim(); localStorage.setItem('dogVisitorName', myName); }
-    else { showToast('⚠️ 请填写昵称'); return; }
-  }
-  const msg = document.getElementById('gbMsg').value.trim();
-  if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
-  const now = new Date();
-  const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  guestbook.unshift({ name: myName, msg, time });
-  saveGuestbook();
-  renderGuestbook();
-  document.getElementById('gbMsg').value = '';
-  if (document.getElementById('gbCurrentName')) document.getElementById('gbCurrentName').textContent = myName;
-  showToast('✅ 留言已发布');
-}
-
+// ====== Init ======
+loadState();
 loadGuestbook();
+document.getElementById('gbCurrentName').textContent = myName || '未设置';
 </script>
 </body>
 </html>
