@@ -343,6 +343,15 @@ h1 {
 
 <script>
 const toast = document.getElementById('toast');
+function recordAction(type) {
+  if (!myName) return;
+  if (!userStats[myName]) userStats[myName] = {flower:0,burn:0,pray:0,total:0};
+  userStats[myName][type]++;
+  userStats[myName].total++;
+  saveState();
+  renderLeaderboard();
+}
+
 let counts = { flower: 0, burn: 0, incense: 0 };
 let userStats = {};
 let logs = [];
