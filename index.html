@@ -223,6 +223,8 @@ h1 {
   outline:none; transition:border-color 0.2s;
 }
 .gb-input:focus, .gb-textarea:focus { border-color:#c8b0a0; }
+.gb-hint { font-size:13px; color:#8a7a6a; margin-bottom:6px; }
+.gb-change { color:#64b5f6; cursor:pointer; font-size:12px; }
 .gb-textarea { resize:vertical; min-height:60px; }
 .gb-btn {
   align-self:flex-end; padding:8px 24px;
@@ -279,19 +281,19 @@ h1 {
   </div>
 
   <div class="actions">
-    <div class="btn flower" onclick="offerFlower()">
+    <div class="btn flower" onclick="checkName(offerFlower)">
       <span class="icon">🌷</span>
       <span>献花</span>
     </div>
-    <div class="btn burn" onclick="burnPaper()">
+    <div class="btn burn" onclick="checkName(burnPaper)">
       <span class="icon">🕯️</span>
       <span>烧纸</span>
     </div>
-    <div class="btn incense" onclick="lightIncense()">
+    <div class="btn incense" onclick="checkName(lightIncense)">
       <span class="icon">🙏</span>
       <span>上香</span>
     </div>
-    <div class="btn pray" onclick="pray()">
+    <div class="btn pray" onclick="checkName(pray)">
       <span class="icon">🕊️</span>
       <span>祈福</span>
     </div>
@@ -320,7 +322,7 @@ h1 {
   <div class="guestbook">
     <div class="gb-title">📝 留言板</div>
     <div class="gb-form">
-      <input type="text" id="gbName" class="gb-input" placeholder="你的昵称（必填）" maxlength="20" required>
+      <div class="gb-hint">当前昵称：<span id="gbCurrentName">未设置</span> <span class="gb-change" onclick="changeName()">[更换]</span></div>
       <textarea id="gbMsg" class="gb-textarea" placeholder="说点什么吧……" maxlength="500" rows="3"></textarea>
       <button class="gb-btn" onclick="submitMsg()">发表留言</button>
     </div>
@@ -337,6 +339,20 @@ h1 {
 const toast = document.getElementById('toast');
 let counts = { flower: 0, burn: 0, incense: 0 };
 let logs = [];
+let myName = localStorage.getItem('dogVisitorName') || '';
+
+function checkName(action) {
+  if (myName) { action(); return; }
+  const name = prompt('请先输入你的昵称（献花、烧纸、留言都需要）：');
+  if (name && name.trim()) {
+    myName = name.trim();
+    localStorage.setItem('dogVisitorName', myName);
+    showToast('✅ 昵称已设置：' + myName);
+    action();
+  } else {
+    showToast('⚠️ 请填写昵称');
+  }
+}
 
 function showToast(msg) {
   toast.textContent = msg;
@@ -345,9 +361,10 @@ function showToast(msg) {
 }
 
 function addLog(action) {
+  const prefix = myName ? myName + ' ' : '';
   const now = new Date();
   const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  logs.unshift({ action, time });
+  logs.unshift({ action: prefix + action, time });
   renderLog();
 }
 
@@ -473,10 +490,19 @@ function renderGuestbook() {
   ).join('');
 }
 
+function changeName() {
+  const n = prompt('输入新昵称：');
+  if (n && n.trim()) { myName = n.trim(); localStorage.setItem('dogVisitorName', myName); document.getElementById('gbCurrentName').textContent = myName; showToast('✅ 昵称已更新'); }
+}
+
 function submitMsg() {
-  const name = document.getElementById('gbName').value.trim();
+  if (!myName) {
+    const n = prompt('请先输入你的昵称：');
+    if (n && n.trim()) { myName = n.trim(); localStorage.setItem('dogVisitorName', myName); }
+    else { showToast('⚠️ 请填写昵称'); return; }
+  }
   const msg = document.getElementById('gbMsg').value.trim();
-  if (!name) { showToast('⚠️ 请留下昵称'); return; }
+  if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
   if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
   const now = new Date();
   const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
@@ -489,6 +515,7 @@ function submitMsg() {
 }
 
 loadGuestbook();
+if (document.getElementById('gbCurrentName')) document.getElementById('gbCurrentName').textContent = myName || '未设置';
 </script>
 </body>
 </html>
