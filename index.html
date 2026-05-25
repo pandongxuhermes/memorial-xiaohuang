@@ -320,7 +320,7 @@ h1 {
   <div class="guestbook">
     <div class="gb-title">📝 留言板</div>
     <div class="gb-form">
-      <input type="text" id="gbName" class="gb-input" placeholder="你的昵称（必填）" maxlength="20" required>
+      <div class="gb-hint">💬 当前昵称：<span id="gbCurrentName" style="font-weight:600;color:#5a4a3a;">未设置</span> <span style="color:#64b5f6;cursor:pointer;font-size:12px;" onclick="changeName()">[更换]</span></div>
       <textarea id="gbMsg" class="gb-textarea" placeholder="说点什么吧……" maxlength="500" rows="3"></textarea>
       <button class="gb-btn" onclick="submitMsg()">发表留言</button>
     </div>
@@ -469,7 +469,7 @@ function renderGuestbook() {
     return;
   }
   list.innerHTML = guestbook.map(m =>
-    '<div class="gb-item"><div class="gb-head"><span class="gb-name">' + m.name + '</span><span class="gb-time">' + m.time + '</span></div><div class="gb-text">' + m.msg + '</div></div>'
+    '<div class="gb-item"><div class="gb-head"><span class="gb-name">' + (m.name || '匿名') + '</span><span class="gb-time">' + m.time + '</span></div><div class="gb-text">' + m.msg + '</div></div>'
   ).join('');
 }
 
