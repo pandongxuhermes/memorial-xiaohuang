@@ -356,6 +356,22 @@ let counts = { flower: 0, burn: 0, incense: 0 };
 let userStats = {};
 let logs = [];
 
+
+
+function checkName(action) {
+  if (myName) { action(); return; }
+  const name = prompt('请先输入你的昵称（献花、烧纸、留言都需要）：');
+  if (name && name.trim()) {
+    myName = name.trim();
+    localStorage.setItem('dogVisitorName', myName);
+    if (document.getElementById('gbCurrentName')) document.getElementById('gbCurrentName').textContent = myName;
+    showToast('✅ 昵称已设置：' + myName);
+    action();
+  } else {
+    showToast('⚠️ 请填写昵称');
+  }
+}
+
 function showToast(msg) {
   toast.textContent = msg;
   toast.classList.add('show');
