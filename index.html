@@ -474,17 +474,20 @@ function renderGuestbook() {
 }
 
 function submitMsg() {
-  const name = document.getElementById('gbName').value.trim();
+  if (!myName) {
+    const n = prompt('请先输入你的昵称：');
+    if (n && n.trim()) { myName = n.trim(); localStorage.setItem('dogVisitorName', myName); }
+    else { showToast('⚠️ 请填写昵称'); return; }
+  }
   const msg = document.getElementById('gbMsg').value.trim();
-  if (!name) { showToast('⚠️ 请留下昵称'); return; }
   if (!msg) { showToast('⚠️ 请输入留言内容'); return; }
   const now = new Date();
   const time = now.toLocaleString('zh-CN', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  guestbook.unshift({ name, msg, time });
+  guestbook.unshift({ name: myName, msg, time });
   saveGuestbook();
   renderGuestbook();
-  // 昵称已统一管理;
   document.getElementById('gbMsg').value = '';
+  if (document.getElementById('gbCurrentName')) document.getElementById('gbCurrentName').textContent = myName;
   showToast('✅ 留言已发布');
 }
 
