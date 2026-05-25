@@ -239,7 +239,14 @@ h1 {
 .gb-name { font-weight:600; color:#5a4a3a; font-size:13px; }
 .gb-time { color:#b8a48c; font-size:11px; }
 .gb-text { color:#6b5a4a; font-size:13px; line-height:1.6; }
-.gb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:20px; }</style>
+.gb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:20px; }
+.leaderboard { margin-bottom:20px; text-align:left; }
+.lb-title { font-size:15px; font-weight:600; color:#5a4a3a; margin-bottom:12px; text-align:center; }
+.lb-item { display:flex; align-items:center; gap:8px; padding:6px 10px; border-bottom:1px solid rgba(232,213,192,0.2); font-size:13px; }
+.lb-rank { width:28px; text-align:center; font-size:14px; }
+.lb-name { font-weight:600; color:#5a4a3a; flex:1; }
+.lb-stats { color:#8a7a6a; font-size:12px; }
+.lb-empty { text-align:center; color:#b8a48c; font-size:13px; padding:14px; }</style>
 </head>
 <body>
 
@@ -317,6 +324,7 @@ h1 {
     <div id="logList"></div>
   </div>
 
+  <div id="leaderboard" class="leaderboard"></div>
   <div class="guestbook">
     <div class="gb-title">📝 留言板</div>
     <div class="gb-form">
@@ -394,7 +402,7 @@ function offerFlower() {
   animateFlowers();
   addLog('🌷 献上了一束花');
   showToast('🌷 愿天堂开满鲜花');
-  saveState();
+  recordAction('flower');
 }
 
 function burnPaper() {
@@ -403,7 +411,7 @@ function burnPaper() {
   animateAshes();
   addLog('🕯️ 烧纸祭奠');
   showToast('🕯️ 纸钱已送达');
-  saveState();
+  recordAction('burn');
 }
 
 function lightIncense() {
@@ -411,7 +419,7 @@ function lightIncense() {
   document.getElementById('incenseCount').textContent = counts.incense;
   addLog('🙏 上香祈福');
   showToast('🙏 一炷清香，愿离苦得乐');
-  saveState();
+  recordAction('incense');
 }
 
 function pray() {
