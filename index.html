@@ -448,13 +448,22 @@ function renderGuestbook() {
 
 // ====== Persistence ======
 function saveState() {
-  localStorage.setItem('dogMemorial', JSON.stringify({ counts: counts, logs: logs, userStats: userStats }));
+  var data = { counts: counts, logs: logs, userStats: userStats };
+  try {
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', 'https://jsonblob.com/api/jsonBlob/019e5db7-0458-7216-8aae-815bd8b758f8', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+  } catch(e) { console.log('save error:', e); }
 }
 
 function loadState() {
   try {
-    var saved = JSON.parse(localStorage.getItem('dogMemorial'));
-    if (saved) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonblob.com/api/jsonBlob/019e5db7-0458-7216-8aae-815bd8b758f8', false);
+    xhr.send();
+    if (xhr.status === 200) {
+      var saved = JSON.parse(xhr.responseText);
       if (saved.counts) { counts = saved.counts; document.getElementById('flowerCount').textContent = counts.flower || 0; document.getElementById('burnCount').textContent = counts.burn || 0; document.getElementById('incenseCount').textContent = counts.incense || 0; }
       if (saved.logs) logs = saved.logs;
       if (saved.userStats) userStats = saved.userStats;
@@ -465,13 +474,32 @@ function loadState() {
 }
 
 function saveGuestbook() {
-  localStorage.setItem('dogGuestbook', JSON.stringify(guestbook));
+  try {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonblob.com/api/jsonBlob/019e5db7-0458-7216-8aae-815bd8b758f8', false);
+    xhr.send();
+    if (xhr.status === 200) {
+      var data = JSON.parse(xhr.responseText);
+      data.guestbook = guestbook;
+      data.counts = counts;
+      data.logs = logs;
+      data.userStats = userStats;
+      xhr.open('PUT', 'https://jsonblob.com/api/jsonBlob/019e5db7-0458-7216-8aae-815bd8b758f8', false);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(data));
+    }
+  } catch(e) { console.log('save gb error:', e); }
 }
 
 function loadGuestbook() {
   try {
-    var saved = JSON.parse(localStorage.getItem('dogGuestbook'));
-    if (saved) guestbook = saved;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonblob.com/api/jsonBlob/019e5db7-0458-7216-8aae-815bd8b758f8', false);
+    xhr.send();
+    if (xhr.status === 200) {
+      var saved = JSON.parse(xhr.responseText);
+      if (saved.guestbook) guestbook = saved.guestbook;
+    }
   } catch(e) {}
   renderGuestbook();
 }
