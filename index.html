@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>纪念一只土狗</title>
+<title>纪念小黄 - 邓文卓沉痛缅怀</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -15,13 +15,25 @@ body {
 .container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 40px 20px 60px;
+  padding: 50px 20px 60px;
   text-align: center;
+}
+.main-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #4a3a2a;
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+}
+.sub-title {
+  font-size: 14px;
+  color: #b8a48c;
+  margin-bottom: 32px;
 }
 .photo-frame {
   width: 200px;
   height: 200px;
-  margin: 0 auto 24px;
+  margin: 0 auto 28px;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #e8d5c0;
@@ -34,7 +46,7 @@ body {
   color: #b8a48c;
 }
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
   color: #5a4a3a;
   margin-bottom: 4px;
@@ -49,12 +61,23 @@ h1 {
   color: #b8a48c;
   margin-bottom: 30px;
 }
+.info {
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #8a7a6a;
+  line-height: 1.8;
+  border: 1px solid rgba(232,213,192,0.3);
+}
+.info span { color: #6b5a4a; font-weight: 500; }
 .story {
   background: rgba(255,255,255,0.6);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 28px;
-  line-height: 1.8;
+  line-height: 1.9;
   font-size: 14px;
   color: #6b5a4a;
   text-align: left;
@@ -133,9 +156,9 @@ h1 {
   margin-top: 40px;
   font-size: 12px;
   color: #c8b8a8;
+  line-height: 2;
 }
 
-/* Toast */
 .toast {
   position: fixed;
   top: 20px;
@@ -154,15 +177,10 @@ h1 {
 }
 .toast.show { opacity: 1; }
 
-/* 烧纸动画 */
-.burn-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  z-index: 50;
-}
 .ash {
-  position: absolute;
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
   font-size: 14px;
   animation: floatUp 4s ease-out forwards;
   opacity: 0;
@@ -172,13 +190,11 @@ h1 {
   50% { opacity: 0.6; transform: translateY(-200px) scale(0.8); }
   100% { opacity: 0; transform: translateY(-400px) scale(0.3); }
 }
-
-/* 花瓣动画 */
 .petal {
   position: fixed;
-  font-size: 18px;
-  pointer-events: none;
   z-index: 50;
+  pointer-events: none;
+  font-size: 18px;
   animation: fall 3s ease-in forwards;
 }
 @keyframes fall {
@@ -192,17 +208,24 @@ h1 {
 <div class="toast" id="toast"></div>
 
 <div class="container">
+  <div class="main-title">邓文卓 沉痛缅怀</div>
+  <div class="sub-title">一只中华田园犬 · 小黄</div>
+
   <div class="photo-frame">🐕</div>
-  <h1>小黄</h1>
-  <div class="subtitle">一只普通的中华田园犬</div>
-  <div class="dates">🐾 来过 · 被爱过 · 从未被忘记</div>
+
+  <div class="info">
+    🏍️ 川崎 ZX-10R · 成都麓湖<br>
+    🎮 网易游戏 · 游戏策划<br>
+    🐾 小黄 · 一只普通的土狗
+  </div>
 
   <div class="story">
     <p>小黄是一只土狗，黄色的毛，耳朵总是耷拉着一边。</p>
-    <p>它不名贵，不是什么品种狗，但它是这世上独一无二的小黄。它会摇着尾巴迎接每一个回家的人，会在你难过的时候把头搁在你腿上，会对着每一个路过的摩托车汪汪叫——就像那天一样。</p>
-    <p>周天骑摩托车的朋友不小心压到了它。它走得太突然了，还没来得及好好告别。</p>
-    <p>小黄，在汪星要好好的。那里有吃不完的肉骨头，有跑不完的田野。</p>
-    <p style="text-align:center;margin-top:16px;">🙏 一路走好</p>
+    <p>它不名贵，不是什么品种狗，但它是这世上独一无二的小黄。它会摇着尾巴迎接每一个回家的人，会在你难过的时候把头搁在你腿上，会在麓湖的阳光下打滚，会对着每一个路过的摩托车好奇地张望。</p>
+    <p>那天，文卓骑着ZX-10R经过，小黄突然窜了出来。一切都发生得太快。车轮下的小黄，再也没有站起来。</p>
+    <p>文卓跪在地上，抱着它，很久很久。</p>
+    <p>有些告别来不及说。但被爱过的生命，永远不会消失。</p>
+    <p style="text-align:center;margin-top:16px;color:#8a7a6a;">🐾 小黄，在汪星要好好的 🐾</p>
   </div>
 
   <div class="actions">
@@ -244,7 +267,10 @@ h1 {
     <div id="logList"></div>
   </div>
 
-  <div class="footer">永远怀念 · 小黄 🐾</div>
+  <div class="footer">
+    邓文卓 · 网易游戏 | 川崎 ZX-10R · 成都麓湖<br>
+    🐾 永远怀念小黄 🐾
+  </div>
 </div>
 
 <script>
@@ -288,12 +314,12 @@ function animateFlowers() {
 }
 
 function animateAshes() {
-  const ashChars = ['🔥','✨','💫','🕯️'];
+  const chars = ['🔥','✨','💫','🕯️'];
   for (let i = 0; i < 8; i++) {
     setTimeout(() => {
       const ash = document.createElement('div');
       ash.className = 'ash';
-      ash.textContent = ashChars[Math.floor(Math.random() * ashChars.length)];
+      ash.textContent = chars[Math.floor(Math.random() * chars.length)];
       ash.style.left = (30 + Math.random() * 40) + '%';
       ash.style.bottom = '30%';
       document.body.appendChild(ash);
@@ -307,7 +333,7 @@ function offerFlower() {
   document.getElementById('flowerCount').textContent = counts.flower;
   animateFlowers();
   addLog('🌷 献上了一束花');
-  showToast('🌷 已献花，愿天堂开满鲜花');
+  showToast('🌷 愿天堂开满鲜花');
   saveState();
 }
 
@@ -316,7 +342,7 @@ function burnPaper() {
   document.getElementById('burnCount').textContent = counts.burn;
   animateAshes();
   addLog('🕯️ 烧纸祭奠');
-  showToast('🕯️ 纸钱已送达，愿在那边衣食无忧');
+  showToast('🕯️ 纸钱已送达');
   saveState();
 }
 
@@ -335,13 +361,14 @@ function pray() {
     '🌈 彩虹桥上有最好的草地',
     '💛 谢谢你带来的快乐时光',
     '🐾 永远活在我们心里',
+    '🏍️ 文卓会一直记得你',
+    '☀️ 麓湖的阳光会替我爱你',
   ];
   const msg = prayers[Math.floor(Math.random() * prayers.length)];
   addLog(msg);
   showToast(msg);
 }
 
-// 状态持久化
 function saveState() {
   localStorage.setItem('dogMemorial', JSON.stringify({ counts, logs }));
 }
@@ -361,10 +388,8 @@ function loadState() {
 }
 
 loadState();
-
-// 自动加一条初始记录
 if (logs.length === 0) {
-  addLog('🐾 纪念页面创建，小黄安息');
+  addLog('🙏 邓文卓为小黄建立了纪念页面');
 }
 </script>
 </body>
